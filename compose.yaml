@@ -1,4 +1,18 @@
 services:
+  backend:
+    build: ./Backend-LCode
+    container_name: fastapi-backend
+    ports:
+      - "9000:8000"
+    volumes:
+      - ./Backend-LCode:/app
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: mysql+pymysql://root:notSecureChangeMe@db:3306/lcode_db
+    restart: always
+
+
   db:
     image: mysql:latest
     restart: always
