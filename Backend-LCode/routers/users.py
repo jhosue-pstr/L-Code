@@ -1,18 +1,15 @@
 from fastapi import APIRouter
+from controlers.Usuario import *
 
-router = APIRouter()
+user = APIRouter()
 
-
-@router.get("/users/", tags=["users"])
-async def read_users():
-    return [{"username": "Rick"}, {"username": "Morty"}]
-
-
-@router.get("/users/me", tags=["users"])
-async def read_user_me():
-    return {"username": "fakecurrentuser"}
+@user.get("/api/usuarios/")
+def ObtenerUsuario():
+    LeerUsuario()
+    return {"message": "Lista de usuarios"}
 
 
-@router.get("/users/{username}", tags=["users"])
-async def read_user(username: str):
-    return {"username": username}
+@user.post("/api/usuarios/")
+def AgregarUsuario(usuario: Usuario):
+    CrearUsuario()
+    return {"message": "Usuario creado"}
