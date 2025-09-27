@@ -12,13 +12,15 @@ services:
       DATABASE_URL: mysql+pymysql://root:notSecureChangeMe@db:3306/lcode_db
     restart: always
 
-
   db:
     image: mysql:latest
     restart: always
+    ports:
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: notSecureChangeMe
-
+    volumes:
+      - mysql_data:/var/lib/mysql
   phpmyadmin:
     image: phpmyadmin
     restart: always
@@ -26,3 +28,6 @@ services:
       - 8080:80
     environment:
       - PMA_ARBITRARY=1
+
+volumes:
+  mysql_data:
