@@ -6,6 +6,8 @@ from sqlmodel import Field, Session, SQLModel, create_engine, select
 from fastapi import Depends, HTTPException, Query
 
 
+
+
 load_dotenv()
 
 db_user = os.getenv("USER_DB")
