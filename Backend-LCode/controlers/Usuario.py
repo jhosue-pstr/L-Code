@@ -1,15 +1,14 @@
 from typing import Annotated
 from fastapi import Depends, HTTPException, Query
 from sqlmodel import Session, select
-from config.database import *
-from models.usuarios import *
+from config.database import get_session
+from models.usuarios import Usuario, UsuarioCreate, UsuarioPublic, UsuarioUpdate
 import datetime
 
 SessionDep = Annotated[Session, Depends(get_session)]
 
 def CrearUsuario(usuario: UsuarioCreate, session: Session) -> UsuarioPublic:
     nuevo_usuario = Usuario.model_validate(usuario)
-    nuevo_usuario.FechaRegistro = datetime.date.now()
     nuevo_usuario.estado = True
     
     session.add(nuevo_usuario)

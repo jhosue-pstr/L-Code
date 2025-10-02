@@ -6,10 +6,9 @@ from controlers.Usuario import (
     LeerUsuarios, CrearUsuario, LeerUsuarioPorId, ActualizarUsuario, EliminarUsuario
 )
 
-user = APIRouter()
+router = APIRouter()
 
-
-@user.get("/api/usuarios/", response_model=list[UsuarioPublic])
+@router.get("/usuarios/", response_model=list[UsuarioPublic])
 def ObtenerUsuario(
     session: Session = Depends(get_session),
     offset: int = 0,
@@ -17,22 +16,18 @@ def ObtenerUsuario(
 ):
     return LeerUsuarios(session, offset=offset, limit=limit)
 
-
-@user.post("/api/usuarios/", response_model=UsuarioPublic)
+@router.post("/usuarios/", response_model=UsuarioPublic)
 def Agregar_Usuario(usuario: UsuarioCreate, session: Session = Depends(get_session)):
     return CrearUsuario(usuario, session)
 
-
-@user.get("/api/usuarios/{IdUsuario}", response_model=UsuarioPublic)
+@router.get("/usuarios/{IdUsuario}", response_model=UsuarioPublic)
 def Obtener_Usuario_Por_Id(IdUsuario: int, session: Session = Depends(get_session)):
     return LeerUsuarioPorId(IdUsuario, session)
 
-
-@user.patch("/api/usuarios/{IdUsuario}", response_model=UsuarioPublic)
+@router.patch("/usuarios/{IdUsuario}", response_model=UsuarioPublic)
 def Actualizar_Usuario(IdUsuario: int, datos: UsuarioUpdate, session: Session = Depends(get_session)):
     return ActualizarUsuario(IdUsuario, datos, session)
 
-
-@user.delete("/api/usuarios/{IdUsuario}")
+@router.delete("/usuarios/{IdUsuario}")
 def Eliminar_Usuario(IdUsuario: int, session: Session = Depends(get_session)):
     return EliminarUsuario(IdUsuario, session)

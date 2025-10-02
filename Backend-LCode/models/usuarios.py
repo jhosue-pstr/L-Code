@@ -1,7 +1,6 @@
 from sqlmodel import Field, SQLModel, Relationship
 from typing import Optional, List
 import datetime
-from models import Usuario, Perfil
 
 
 class UsuarioBase(SQLModel):
@@ -16,11 +15,10 @@ class Usuario(UsuarioBase, table=True):
     FechaRegistro: datetime.date = Field(default_factory=datetime.datetime.utcnow)
     estado: bool = True
 
-    # Relación con Perfil (nota: usamos string "Perfil" en lugar de importarlo)
     perfiles: List["Perfil"] = Relationship(back_populates="usuario")
+    inscripciones: List["Inscripcion"] = Relationship(back_populates="usuario")
 
 
-# Modelos Pydantic (para request/response)
 class UsuarioCreate(UsuarioBase):
     Contrasena: str
 
